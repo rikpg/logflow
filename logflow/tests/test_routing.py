@@ -7,19 +7,6 @@ from logflow.routing import Routes, Route, RoutesManager
 from logflow.handlers import Handler
 
 
-class TestRoutes(unittest.TestCase):
-
-    def setUp(self):
-        self.routes = Routes()
-
-    def test_add_with_route_args(self):
-        """Tests add method with Route arguments."""
-        self.routes.add(
-            Route('test.path', []),
-            Route('test.path.foo', []),
-        )
-
-
 class TestFilters(unittest.TestCase):
 
     def setUp(self):

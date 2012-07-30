@@ -10,6 +10,9 @@ routes = _dispatcher.routes
 
 def get_logger(name):
     from logflow.base import Logger
+    if name not in routes:
+        raise AttributeError('No routes starts from {!r}'.format(name))
+
     logger = Logger(name)
     logger._dispatcher = _dispatcher
     return logger

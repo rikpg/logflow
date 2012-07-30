@@ -24,6 +24,14 @@ class logflowTest(unittest.TestCase):
         logger.info('foo msg')
         self.mock_handler.emit.assert_called_once_with('INFO:test:foo msg')
 
+    def test_get_logger_with_no_route_raise_exception(self):
+        """Tests get_logger with no matching route raise an exception."""
+        logflow.routes.add(
+            logflow.Route('test', self.mock_handler),
+        )
+
+        tools.assert_raises(AttributeError, logflow.get_logger, 'test.foo')
+
     def test_block(self):
         """Tests block context manager."""
         logflow.routes.add(

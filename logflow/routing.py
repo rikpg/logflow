@@ -22,6 +22,14 @@ class Routes:
         self._counter = count()
         self._block_register = defaultdict(list)
 
+    def __iter__(self):
+        for route_lst in self.dct.values():
+            for route in route_lst:
+                yield route
+
+    def __contains__(self, item):
+        return item in self.dct
+
     def add(self, *args):
         for r in args:
             self.dct[r.start].append(r)
@@ -45,11 +53,6 @@ class Routes:
         self.dct.clear()
         self._counter = count()
         self._block_register.clear()
-
-    def __iter__(self):
-        for route_lst in self.dct.values():
-            for route in route_lst:
-                yield route
 
 
 class RoutesManager:

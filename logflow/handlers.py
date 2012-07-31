@@ -45,7 +45,8 @@ class FileHandler(Handler):
 
     terminator = '\n'
 
-    def __init__(self, filename, mode='a'):
+    def __init__(self, filename, mode='a', **kwargs):
+        super().__init__(**kwargs)
         self.filename = filename
         self.mode = mode
 

@@ -43,11 +43,22 @@ NOTSET = Level(0, 'NOTSET')
 
 class Record:
 
-    def __init__(self, level, msg, logger):
+    def __init__(self, level, msg, logger, fields=None):
         self.level = level
         self.msg = msg
         self.logger = logger
+        self.fields = fields or {}
         self.datetime = datetime.datetime.now()
+
+    def params(self):
+        pms = {
+            'level': self.level,
+            'msg': self.msg,
+            'logger': self.logger,
+            'datetime': self.datetime,
+        }
+        pms.update(self.fields)
+        return pms
 
 
 class Logger:
@@ -56,24 +67,24 @@ class Logger:
         self.name = name
         self._dispatcher = None
 
-    def log(self, lvl, msg):
-        record = Record(level=lvl, msg=msg, logger=self.name)
+    def log(self, lvl, msg, **kwargs):
+        record = Record(level=lvl, msg=msg, logger=self.name, fields=kwargs)
         self._dispatcher.send(record)
 
-    def error(self, msg):
-        return self.log(ERROR, msg)
+    def error(self, msg, **kwargs):
+        return self.log(ERROR, msg, **kwargs)
 
-    def critical(self, msg):
-        return self.log(CRITICAL, msg)
+    def critical(self, msg, **kwargs):
+        return self.log(CRITICAL, msg, **kwargs)
 
-    def warning(self, msg):
-        return self.log(WARNING, msg)
+    def warning(self, msg, **kwargs):
+        return self.log(WARNING, msg, **kwargs)
 
-    def notice(self, msg):
-        return self.log(NOTICE, msg)
+    def notice(self, msg, **kwargs):
+        return self.log(NOTICE, msg, **kwargs)
 
-    def info(self, msg):
-        return self.log(INFO, msg)
+    def info(self, msg, **kwargs):
+        return self.log(INFO, msg, **kwargs)
 
-    def debug(self, msg):
-        return self.log(DEBUG, msg)
+    def debug(self, msg, **kwargs):
+        return self.log(DEBUG, msg, **kwargs)

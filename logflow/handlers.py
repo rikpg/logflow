@@ -27,7 +27,7 @@ class Handler:
 
     def handle(self, record):
         if self.enabled() and self.level < record.level:
-            self.emit(self.formatter.format(**record.__dict__))
+            self.emit(self.formatter.format_map(record.params()))
 
     def emit(self, message):
         raise NotImplementedError
